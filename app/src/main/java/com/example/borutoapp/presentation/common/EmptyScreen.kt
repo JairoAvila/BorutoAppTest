@@ -3,6 +3,7 @@ package com.example.borutoapp.presentation.common
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -40,12 +41,12 @@ fun EmptyScreen(
         mutableStateOf("Find your Favorite Hero!")
     }
     var icon by remember {
-        mutableIntStateOf(R.drawable.ic_search_document)
+        mutableIntStateOf(R.drawable.ic_error)
     }
 
     if (error != null) {
         message = parseErrorMessage(error = error)
-        icon = R.drawable.ic_network_error
+        icon = R.drawable.ic_error
     }
 
     var startAnimation by remember { mutableStateOf(false) }
@@ -115,13 +116,11 @@ fun EmptyContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Icon(
+            Image(
                 modifier = Modifier
-                    .size(NETWORK_ERROR_ICON_HEIGHT)
-                    .alpha(alpha = alphaAnim),
+                    .size(NETWORK_ERROR_ICON_HEIGHT),
                 painter = painterResource(id = icon),
                 contentDescription = stringResource(R.string.network_error_icon),
-                tint = if (isSystemInDarkTheme()) LightGray else DarkGray
             )
             Text(
                 modifier = Modifier
@@ -157,7 +156,7 @@ fun parseErrorMessage(error: LoadState.Error): String {
 fun EmptyScreenPreview() {
     EmptyContent(
         alphaAnim = ContentAlpha.disabled,
-        icon = R.drawable.ic_network_error,
+        icon = R.drawable.ic_error,
         message = "Internet Unavailable."
     )
 }
@@ -167,7 +166,7 @@ fun EmptyScreenPreview() {
 fun EmptyScreenDarkPreview() {
     EmptyContent(
         alphaAnim = ContentAlpha.disabled,
-        icon = R.drawable.ic_network_error,
+        icon = R.drawable.ic_error,
         message = "Internet Unavailable."
     )
 }

@@ -109,7 +109,7 @@ fun HeroItem(
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(data = "$BASE_URL${hero.image}")
+                    .data(data = hero.image)
                     .placeholder(drawableResId = R.drawable.ic_placeholder)
                     .error(drawableResId = R.drawable.ic_placeholder)
                     .build(),
@@ -119,9 +119,9 @@ fun HeroItem(
         }
         Surface(
             modifier = Modifier
-                .fillMaxHeight(0.4f)
+                .fillMaxHeight(0.2f)
                 .fillMaxWidth(),
-            color = Color.Black.copy(alpha = ContentAlpha.medium),
+            color = Blue200,
             shape = RoundedCornerShape(
                 bottomStart = LARGE_PADDING,
                 bottomEnd = LARGE_PADDING
@@ -140,27 +140,6 @@ fun HeroItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                Text(
-                    text = hero.about,
-                    color = Color.White.copy(alpha = ContentAlpha.medium),
-                    fontSize = MaterialTheme.typography.subtitle1.fontSize,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Row(
-                    modifier = Modifier.padding(top = SMALL_PADDING),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RatingWidget(
-                        modifier = Modifier.padding(end = SMALL_PADDING),
-                        rating = hero.rating
-                    )
-                    Text(
-                        text = "(${hero.rating})",
-                        textAlign = TextAlign.Center,
-                        color = Color.White.copy(alpha = ContentAlpha.medium)
-                    )
-                }
             }
         }
     }
@@ -175,14 +154,10 @@ fun HeroItemPreview() {
             id = 1,
             name = "Sasuke",
             image = "",
-            about = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
-            rating = 0.0,
-            power = 100,
-            month = "",
-            day = "",
-            family = listOf(),
-            abilities = listOf(),
-            natureTypes = listOf()
+            status = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+            species = "",
+            type = "",
+            gender = ""
         ),
         navController = rememberNavController()
     )
@@ -197,14 +172,10 @@ fun HeroItemDarkPreview() {
             id = 1,
             name = "Sasuke",
             image = "",
-            about = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
-            rating = 0.0,
-            power = 100,
-            month = "",
-            day = "",
-            family = listOf(),
-            abilities = listOf(),
-            natureTypes = listOf()
+            status = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+            species = "",
+            type = "",
+            gender = ""
         ),
         navController = rememberNavController()
     )

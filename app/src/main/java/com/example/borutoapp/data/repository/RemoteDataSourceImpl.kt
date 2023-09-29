@@ -37,7 +37,11 @@ class RemoteDataSourceImpl(
         return Pager(
             config = PagingConfig(pageSize = ITEMS_PER_PAGE),
             pagingSourceFactory = {
-                SearchHeroesSource(borutoApi = borutoApi, query = query)
+                SearchHeroesSource(
+                    borutoApi = borutoApi,
+                    query = query,
+                    borutoDatabase = borutoDatabase
+                )
             }
         ).flow
     }

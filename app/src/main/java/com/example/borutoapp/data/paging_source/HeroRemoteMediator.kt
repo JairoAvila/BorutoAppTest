@@ -9,6 +9,7 @@ import com.example.borutoapp.data.local.BorutoDatabase
 import com.example.borutoapp.data.remote.BorutoApi
 import com.example.borutoapp.domain.model.Hero
 import com.example.borutoapp.domain.model.HeroRemoteKeys
+import com.example.borutoapp.util.extractPageNumber
 
 @ExperimentalPagingApi
 class HeroRemoteMediator(
@@ -58,27 +59,27 @@ class HeroRemoteMediator(
             }
 
             val response = borutoApi.getAllHeroes(page = page)
-            if (response.heroes.isNotEmpty()) {
+            if (response.results.isNotEmpty()) {
                 borutoDatabase.withTransaction {
                     if (loadType == LoadType.REFRESH) {
                         heroDao.deleteAllHeroes()
                         heroRemoteKeysDao.deleteAllRemoteKeys()
                     }
-                    val prevPage = response.prevPage
-                    val nextPage = response.nextPage
-                    val keys = response.heroes.map { hero ->
+                    val prevPage = response.info?.prev?.extractPageNumber()
+                    val nextPage = response.info?.next?.extractPageNumber()
+                    val keys = response.results.map { hero ->
                         HeroRemoteKeys(
                             id = hero.id,
                             prevPage = prevPage,
                             nextPage = nextPage,
-                            lastUpdated = response.lastUpdated
+                            lastUpdated = System.currentTimeMillis()
                         )
                     }
                     heroRemoteKeysDao.addAllRemoteKeys(heroRemoteKeys = keys)
-                    heroDao.addHeroes(heroes = response.heroes)
+                    heroDao.addHeroes(heroes = response.results)
                 }
             }
-            MediatorResult.Success(endOfPaginationReached = response.nextPage == null)
+            MediatorResult.Success(endOfPaginationReached = response.info?.next == null)
         } catch (e: Exception) {
             return MediatorResult.Error(e)
         }

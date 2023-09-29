@@ -41,7 +41,7 @@ fun DetailsScreen(
             when (event) {
                 is UiEvent.GenerateColorPalette -> {
                     val bitmap = convertImageUrlToBitmap(
-                        imageUrl = "$BASE_URL${selectedHero?.image}",
+                        imageUrl = selectedHero?.image!!,
                         context = context
                     )
                     if (bitmap != null) {

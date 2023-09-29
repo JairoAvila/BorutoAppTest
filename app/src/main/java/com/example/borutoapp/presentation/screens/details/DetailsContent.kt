@@ -18,7 +18,6 @@ import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetScaffoldState
 import androidx.compose.material.BottomSheetValue.Collapsed
 import androidx.compose.material.BottomSheetValue.Expanded
-import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -37,7 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
@@ -53,7 +51,6 @@ import coil.request.ImageRequest
 import com.example.borutoapp.R
 import com.example.borutoapp.domain.model.Hero
 import com.example.borutoapp.presentation.components.InfoBox
-import com.example.borutoapp.presentation.components.OrderedList
 import com.example.borutoapp.ui.theme.EXPANDED_RADIUS_LEVEL
 import com.example.borutoapp.ui.theme.EXTRA_LARGE_PADDING
 import com.example.borutoapp.ui.theme.INFO_ICON_SIZE
@@ -62,8 +59,6 @@ import com.example.borutoapp.ui.theme.MEDIUM_PADDING
 import com.example.borutoapp.ui.theme.MIN_SHEET_HEIGHT
 import com.example.borutoapp.ui.theme.SMALL_PADDING
 import com.example.borutoapp.ui.theme.titleColor
-import com.example.borutoapp.util.Constants.ABOUT_TEXT_MAX_LINES
-import com.example.borutoapp.util.Constants.BASE_URL
 import com.example.borutoapp.util.Constants.MIN_BACKGROUND_IMAGE_HEIGHT
 
 @ExperimentalCoilApi
@@ -91,7 +86,7 @@ fun DetailsContent(
     }
 
     val scaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = rememberBottomSheetState(initialValue = Expanded)
+        bottomSheetState = rememberBottomSheetState(initialValue = Collapsed)
     )
 
     val currentSheetFraction = scaffoldState.currentSheetFraction
@@ -156,7 +151,7 @@ fun BottomSheetContent(
                 modifier = Modifier
                     .size(INFO_ICON_SIZE)
                     .weight(2f),
-                painter = painterResource(id = R.drawable.ic_logo),
+                painter = painterResource(id = R.drawable.ic_planet),
                 contentDescription = stringResource(id = R.string.app_logo),
                 tint = contentColor
             )
@@ -176,60 +171,24 @@ fun BottomSheetContent(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             InfoBox(
-                icon = painterResource(id = R.drawable.ic_bolt),
+                icon = painterResource(id = R.drawable.ic_gender),
                 iconColor = infoBoxIconColor,
-                bigText = "${selectedHero.power}",
-                smallText = stringResource(R.string.power),
+                bigText = selectedHero.gender,
+                smallText = stringResource(R.string.gender),
                 textColor = contentColor
             )
             InfoBox(
-                icon = painterResource(id = R.drawable.ic_calendar),
+                icon = painterResource(id = R.drawable.ic_human),
                 iconColor = infoBoxIconColor,
-                bigText = selectedHero.month,
-                smallText = stringResource(R.string.month),
+                bigText = selectedHero.species,
+                smallText = stringResource(R.string.species),
                 textColor = contentColor
             )
             InfoBox(
-                icon = painterResource(id = R.drawable.ic_cake),
+                icon = painterResource(id = R.drawable.ic_death),
                 iconColor = infoBoxIconColor,
-                bigText = selectedHero.day,
-                smallText = stringResource(R.string.birthday),
-                textColor = contentColor
-            )
-        }
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.about),
-            color = contentColor,
-            fontSize = MaterialTheme.typography.subtitle1.fontSize,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            modifier = Modifier
-                .alpha(ContentAlpha.medium)
-                .padding(bottom = MEDIUM_PADDING),
-            text = selectedHero.about,
-            color = contentColor,
-            fontSize = MaterialTheme.typography.body1.fontSize,
-            maxLines = ABOUT_TEXT_MAX_LINES
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            OrderedList(
-                title = stringResource(R.string.family),
-                items = selectedHero.family,
-                textColor = contentColor
-            )
-            OrderedList(
-                title = stringResource(R.string.abilities),
-                items = selectedHero.abilities,
-                textColor = contentColor
-            )
-            OrderedList(
-                title = stringResource(R.string.nature_types),
-                items = selectedHero.natureTypes,
+                bigText = selectedHero.status,
+                smallText = stringResource(R.string.status),
                 textColor = contentColor
             )
         }
@@ -244,7 +203,7 @@ fun BackgroundContent(
     backgroundColor: Color = MaterialTheme.colors.surface,
     onCloseClicked: () -> Unit
 ) {
-    val imageUrl = remember { "$BASE_URL${heroImage}" }
+    val imageUrl = remember { heroImage }
 
     Box(
         modifier = Modifier
@@ -307,16 +266,12 @@ fun BottomSheetContentPreview() {
     BottomSheetContent(
         selectedHero = Hero(
             id = 1,
-            name = "Naruto",
+            name = "Sasuke",
             image = "",
-            about = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            rating = 4.5,
-            power = 0,
-            month = "Oct",
-            day = "1st",
-            family = listOf("Minato", "Kushina", "Boruto", "Himawari"),
-            abilities = listOf("Sage Mode", "Shadow Clone", "Rasengan"),
-            natureTypes = listOf("Earth", "Wind")
+            status = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+            species = "",
+            type = "",
+            gender = ""
         )
     )
 }

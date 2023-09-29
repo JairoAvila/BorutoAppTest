@@ -11,7 +11,7 @@ import coil.request.SuccessResult
 object PaletteGenerator {
 
     suspend fun convertImageUrlToBitmap(
-        imageUrl: String,
+        imageUrl: String?,
         context: Context
     ): Bitmap? {
         val loader = ImageLoader(context = context)
